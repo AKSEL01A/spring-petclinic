@@ -94,6 +94,12 @@ public class Owner extends Person {
 		return this.pets;
 	}
 
+	/*
+	 * @ requires pet != null; ensures getPets().contains(pet) ==> pet.isNew(); assignable
+	 * pets;
+	 *
+	 * @
+	 */
 	public void addPet(Pet pet) {
 		if (pet.isNew()) {
 			getPets().add(pet);
@@ -105,6 +111,14 @@ public class Owner extends Person {
 	 * @param name to test
 	 * @return the Pet with the given name, or null if no such Pet exists for this Owner
 	 */
+
+	/*
+	 * @ requires name != null; ensures \result == null ||
+	 * \result.getName().equalsIgnoreCase(name); assignable \nothing;
+	 *
+	 * @
+	 */
+
 	public Pet getPet(String name) {
 		return getPet(name, false);
 	}
@@ -113,6 +127,13 @@ public class Owner extends Person {
 	 * Return the Pet with the given id, or null if none found for this Owner.
 	 * @param id to test
 	 * @return the Pet with the given id, or null if no such Pet exists for this Owner
+	 */
+
+	/*
+	 * @ requires id != null; ensures \result == null || \result.getId().equals(id);
+	 * assignable \nothing;
+	 *
+	 * @
 	 */
 	public Pet getPet(Integer id) {
 		for (Pet pet : getPets()) {
@@ -161,6 +182,14 @@ public class Owner extends Person {
 	 * @param petId the identifier of the {@link Pet}, must not be {@literal null}.
 	 * @param visit the visit to add, must not be {@literal null}.
 	 */
+
+	/*
+	 * @ requires petId != null && visit != null; requires getPet(petId) != null; ensures
+	 * getPet(petId).getVisits().contains(visit); assignable pets[*].visits;
+	 *
+	 * @
+	 */
+
 	public void addVisit(Integer petId, Visit visit) {
 
 		Assert.notNull(petId, "Pet identifier must not be null!");

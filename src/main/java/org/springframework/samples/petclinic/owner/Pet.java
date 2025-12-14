@@ -37,9 +37,6 @@ import jakarta.persistence.Table;
  * Simple business object representing a pet.
  *
  * @author Ken Krebs
- * @author Juergen Hoeller
- * @author Sam Brannen
- * @author Wick Dynex
  */
 @Entity
 @Table(name = "pets")
@@ -58,26 +55,57 @@ public class Pet extends NamedEntity {
 	@OrderBy("date ASC")
 	private final Set<Visit> visits = new LinkedHashSet<>();
 
+	/*
+	 * @ requires birthDate != null; ensures \result == birthDate; assignable
+	 * this.birthDate;
+	 *
+	 * @
+	 */
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
+	/*
+	 * @ ensures \result == birthDate; assignable \nothing;
+	 *
+	 * @
+	 */
 	public LocalDate getBirthDate() {
 		return this.birthDate;
 	}
 
-	public PetType getType() {
-		return this.type;
-	}
-
+	/*
+	 * @ requires type != null; ensures \result == type; assignable this.type;
+	 *
+	 * @
+	 */
 	public void setType(PetType type) {
 		this.type = type;
 	}
 
+	/*
+	 * @ ensures \result == type; assignable \nothing;
+	 *
+	 * @
+	 */
+	public PetType getType() {
+		return this.type;
+	}
+
+	/*
+	 * @ ensures \result == visits; assignable \nothing;
+	 *
+	 * @
+	 */
 	public Collection<Visit> getVisits() {
 		return this.visits;
 	}
 
+	/*
+	 * @ requires visit != null; ensures getVisits().contains(visit); assignable visits;
+	 *
+	 * @
+	 */
 	public void addVisit(Visit visit) {
 		getVisits().add(visit);
 	}

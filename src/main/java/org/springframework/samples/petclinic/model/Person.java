@@ -20,7 +20,7 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
 
 /**
- * Simple JavaBean domain object representing an person.
+ * Simple JavaBean domain object representing a person.
  *
  * @author Ken Krebs
  */
@@ -35,18 +35,42 @@ public class Person extends BaseEntity {
 	@NotBlank
 	private String lastName;
 
+	/*
+	 * @ requires true; // no precondition ensures \result != null &&
+	 * \result.equals(firstName); assignable \nothing;
+	 *
+	 * @
+	 */
 	public String getFirstName() {
 		return this.firstName;
 	}
 
+	/*
+	 * @ requires firstName != null && !firstName.isEmpty(); ensures
+	 * this.firstName.equals(firstName); assignable this.firstName;
+	 *
+	 * @
+	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
+	/*
+	 * @ requires true; // no precondition ensures \result != null &&
+	 * \result.equals(lastName); assignable \nothing;
+	 *
+	 * @
+	 */
 	public String getLastName() {
 		return this.lastName;
 	}
 
+	/*
+	 * @ requires lastName != null && !lastName.isEmpty(); ensures
+	 * this.lastName.equals(lastName); assignable this.lastName;
+	 *
+	 * @
+	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}

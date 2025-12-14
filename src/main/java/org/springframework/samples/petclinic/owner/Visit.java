@@ -29,7 +29,6 @@ import jakarta.validation.constraints.NotBlank;
  * Simple JavaBean domain object representing a visit.
  *
  * @author Ken Krebs
- * @author Dave Syer
  */
 @Entity
 @Table(name = "visits")
@@ -45,22 +44,48 @@ public class Visit extends BaseEntity {
 	/**
 	 * Creates a new instance of Visit for the current date
 	 */
+	/*
+	 * @ ensures date != null; assignable this.date;
+	 *
+	 * @
+	 */
 	public Visit() {
 		this.date = LocalDate.now();
 	}
 
+	/*
+	 * @ ensures \result == date; assignable \nothing;
+	 *
+	 * @
+	 */
 	public LocalDate getDate() {
 		return this.date;
 	}
 
+	/*
+	 * @ requires date != null; ensures this.date == date; assignable this.date;
+	 *
+	 * @
+	 */
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
+	/*
+	 * @ ensures \result == description; assignable \nothing;
+	 *
+	 * @
+	 */
 	public String getDescription() {
 		return this.description;
 	}
 
+	/*
+	 * @ requires description != null && !description.isEmpty(); ensures this.description
+	 * == description; assignable this.description;
+	 *
+	 * @
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
