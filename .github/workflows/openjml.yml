@@ -1,0 +1,44 @@
+name: OpenJML Verification
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  openjml:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build project
+        run: mvn clean compile
+
+      - name: Verify JML with OpenJML (Person)
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/work openjml/openjml \
+          openjml -esc -classpath /work/target/classes \
+          -sourcepath /work/src/main/java \
+          /work/src/main/java/org/springframework/samples/petclinic/model/Person.java
+
+      - name: Verify JML with OpenJML (Owner)
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/work openjml/openjml \
+          openjml -esc -classpath /work/target/classes \
+          -sourcepath /work/src/main/java \
+          /work/src/main/java/org/springframework/samples/petclinic/owner/Owner.java
+
+      - name: Verify JML with OpenJML (Pet)
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/work openjml/openjml \
+          openjml -esc -classpath /work/target/classes \
+          -sourcepath /work/src/main/java \
+          /work/src/main/java/org/springframework/samples/petclinic/owner/Pet.java
